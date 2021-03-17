@@ -1,5 +1,6 @@
-import Post from "./post";
+import  Post  from "./Post";
 
 
-
-export default Post
+export default {
+   Post
+}

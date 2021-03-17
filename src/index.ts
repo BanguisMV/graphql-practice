@@ -1,9 +1,14 @@
 import express, { Application } from 'express';
 import { ApolloServer } from 'apollo-server-express'
+import  mongoose  from 'mongoose';
 import consola from 'consola';
+
+
 import { PORT, IN_PROD, DB } from './config'
 import { typeDefs, resolvers } from './graphql';
-import  mongoose  from 'mongoose';
+
+import * as AppModels from './models'
+
 
 const { error, success } = consola
 
@@ -11,7 +16,7 @@ const server = new ApolloServer({
     typeDefs, 
     resolvers, 
     playground:IN_PROD, 
-    context: { } 
+    context: { ...AppModels } 
 });
 
 const app: Application = express()
@@ -32,7 +37,7 @@ const startApp = async () => {
         error({
             badge:true, 
             message: `[SERVER]: ${error.mesagge}`
-        })
+        })  
     }
 
    

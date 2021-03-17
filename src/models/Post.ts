@@ -9,7 +9,7 @@ const PostSchema = new Schema({
         type: String,
         required: true
     },
-    featuredImaged: {
+    featuredImage: {
         type: String,
         required: false
     }

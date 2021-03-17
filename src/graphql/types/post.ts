@@ -5,11 +5,24 @@ export default gql`
         getAllPosts: [Post!]!
     }
 
-    type Post {
+    extend type Mutation {
+        createNewPost(input: NewPost): Post!
+        updatePost(id:ID, input: NewPost): Post
+        deletePost(id:ID!): Post
+    }
+
+    input NewPost {
         title:          String!
         content:        String!
         featuredImage:  String
-        createAt:       String
+    }
+     
+    type Post {
+        _id:            String
+        title:          String!
+        content:        String!
+        createdAt:      String
         updatedAt:      String
+        featuredImage:  String
     }
 `;
