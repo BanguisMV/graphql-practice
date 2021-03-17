@@ -1,14 +1,16 @@
 import { gql } from 'apollo-server-express';
 
 export default gql`
+
     extend type Query {
-        getAllPosts: [Post!]!
+        getAllPosts: [Post]!
+        getPost(id:ID!): Post
     }
 
     extend type Mutation {
-        createNewPost(input: NewPost): Post!
-        updatePost(id:ID, input: NewPost): Post
-        deletePost(id:ID!): Post
+        createPost(input: NewPost):Post!
+        updatePost(id:ID, input: UpdatePost): Post
+        deletePost(id:ID!): PostNotification!
     }
 
     input NewPost {
@@ -16,13 +18,25 @@ export default gql`
         content:        String!
         featuredImage:  String
     }
-     
+    
+    input UpdatePost  {
+        title:          String
+        content:        String
+        featuredImage:  String
+    }
+
     type Post {
-        _id:            String
+        id:             ID
         title:          String!
         content:        String!
         createdAt:      String
         updatedAt:      String
         featuredImage:  String
+    }
+
+    type PostNotification {
+        id:      ID
+        message: String!
+        success: Boolean
     }
 `;

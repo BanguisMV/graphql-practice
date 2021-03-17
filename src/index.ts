@@ -9,38 +9,29 @@ import { typeDefs, resolvers } from './graphql';
 
 import * as AppModels from './models'
 
-
-const { error, success } = consola
-
-const server = new ApolloServer({ 
-    typeDefs, 
-    resolvers, 
-    playground:IN_PROD, 
-    context: { ...AppModels } 
-});
+const server = new ApolloServer({  typeDefs,  resolvers,  playground:IN_PROD, context: { ...AppModels } });
 
 const app: Application = express()
+
 const startApp = async () => {
 
     try {
-        await mongoose.connect(DB, { useNewUrlParser: true, useUnifiedTopology: true });
-        success({ 
+        await mongoose.connect(DB, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
+        consola.success({ 
             badge:true, 
             message: `[DATABASE]: Succesfully connected`,
         })
         server.applyMiddleware({ app });
-        app.listen(PORT, () => success({ 
+        app.listen(PORT, () => consola.success({ 
             badge:true, 
             message: `[SERVER]: Server is Running at PORT: ${PORT}`,
         }))
     } catch (error) {
-        error({
+        consola.error({
             badge:true, 
             message: `[SERVER]: ${error.mesagge}`
         })  
     }
-
-   
 }
 
 startApp()

@@ -1,28 +1,44 @@
-import { InputPost, Post } from "../interface/interfaces"
+import { InputPost, Post, PostNotification } from "../interface/interfaces"
 
 
 export default {
     Query: {
-        getAllPosts: ( _:any, {}:any , context:any, {}:any ): Promise<Post> => {
+
+        getAllPosts: async ( _:any, {}:any , context:any ): Promise<Post[]> => {
             const PostModel = context.default.Post
-            return PostModel.find()
+            return await PostModel.find()
+        },
+
+        getPost: async ( _:any, { id }:any , context:any ): Promise<Post> => {
+            const PostModel = context.default.Post
+            return await PostModel.findById(id).exec()
         }
     },
 
     Mutation: {
-        createNewPost: async ( _:any, { input }:InputPost , context:any, info:any ): Promise<Post> => {
+
+        createPost: async ( _:any, { input }:InputPost , context:any ): Promise<Post> => {
             const PostModel = context.default.Post
             return await PostModel.create(input)
         },
         
-        updatePost: async ( _:any, { id, input }:InputPost , context:any, info:any ) => {
+        updatePost: async ( _:any, { id, input }:InputPost , context:any): Promise<Post> => {
             const PostModel = context.default.Post
             return await PostModel.findByIdAndUpdate(id, input, { new:true })
         },
-        deletePost: async ( _:any, { id }:InputPost , context:any, info:any ) => {
+
+        deletePost: async ( _:any, { id }:InputPost , context:any): Promise<PostNotification> => {
             const PostModel = context.default.Post
-            return await PostModel.remove({_id: id })
-            
+            await PostModel.deleteOne({ _id: id })
+
+            return {
+                id: id,
+                success: true,
+                message: "Your post is DELETED"
+            }
+
         }
+
+
     }
 }

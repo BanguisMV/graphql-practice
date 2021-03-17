@@ -5,6 +5,12 @@ export type Post = {
 }
 
 export type InputPost = {
-    id?:  String;
+    id?:  string;
     input: Post;
+}
+
+export type PostNotification = {
+    id?:     string;
+    message: string;
+    success: boolean
 }

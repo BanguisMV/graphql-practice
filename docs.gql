@@ -1,0 +1,40 @@
+mutation DELETE_POST($id:ID!) {
+  deletePost(id:$id) {
+    message
+    id
+    success
+  }
+}
+
+mutation CREATE_POST($title:String!, $content:String!, $featuredImage: String) {
+  createPost(input:{ title:$title, content:$content, featuredImage:$featuredImage }) {
+    id
+    title
+    content
+  }
+}
+
+mutation UPDATE_POST($id:ID!,$title:String!, $content:String!, $featuredImage: String) {
+  updatePost(id:$id, input:{ title:$title, content:$content, featuredImage:$featuredImage }) {
+    id
+    title
+    content
+  }
+}
+
+query GET_ALL_POSTS {
+  getAllPosts {
+ 	id
+    title
+	content
+    featuredImage
+    createdAt
+    updatedAt
+  }
+}
+
+query GET_POST($id:ID!) {
+  getPost(id:$id) {
+    content
+  }
+}
