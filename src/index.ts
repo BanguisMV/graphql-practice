@@ -1,15 +1,19 @@
 import express, { Application } from 'express';
-import { ApolloServer } from 'apollo-server-express'
+import { ApolloServer, PubSub } from 'apollo-server-express'
 import  mongoose  from 'mongoose';
 import consola from 'consola';
-
-
 import { PORT, IN_PROD, DB } from './config'
 import { typeDefs, resolvers } from './graphql';
 
 import * as AppModels from './models'
 
-const server = new ApolloServer({  typeDefs,  resolvers,  playground:IN_PROD, context: { ...AppModels } });
+const pubsub = new PubSub();
+const server = new ApolloServer({ 
+      typeDefs, 
+      resolvers,
+      playground:IN_PROD, 
+      context: { ...AppModels, pubsub } 
+});
 
 const app: Application = express()
 

@@ -12,6 +12,10 @@ export default gql`
         updatePost(id:ID, input: UpdatePost): Post
         deletePost(id:ID!): PostNotification!
     }
+    
+    extend type Subscription {
+       newPost: Post!
+    }
 
     input NewPost {
         title:          String!

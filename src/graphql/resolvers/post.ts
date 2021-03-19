@@ -19,6 +19,10 @@ export default {
 
         createPost: async ( _:any, { input }:InputPost , context:any ): Promise<Post> => {
             const PostModel = context.default.Post
+            const { pubsub } = context
+            pubsub.publish("NEW_POST", {
+                newPost:input
+            })
             return await PostModel.create(input)
         },
         
@@ -30,15 +34,19 @@ export default {
         deletePost: async ( _:any, { id }:InputPost , context:any): Promise<PostNotification> => {
             const PostModel = context.default.Post
             await PostModel.deleteOne({ _id: id })
-
             return {
                 id: id,
                 success: true,
                 message: "Your post is DELETED"
             }
-
         }
+    },
 
-
+    Subscription: {
+        newPost: {
+            subscribe: (_:any, nothing:any, { pubsub }:any) => {
+                console.log(pubsub)
+                pubsub.asyncIterator('NEW_POST')}
+        }
     }
 }

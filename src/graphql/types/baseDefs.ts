@@ -9,7 +9,7 @@ export default gql`
         _:String!
     }
 
-    type Subscriptions {
+    type Subscription {
         _:String!
     }
 `;

@@ -12,6 +12,7 @@ mutation CREATE_POST($title:String!, $content:String!, $featuredImage: String) {
     title
     content
   }
+  
 }
 
 mutation UPDATE_POST($id:ID!,$title:String!, $content:String!, $featuredImage: String) {
@@ -37,4 +38,9 @@ query GET_POST($id:ID!) {
   getPost(id:$id) {
     content
   }
+}
+
+
+mutation UPLOAD($file:Upload!) {
+  imageUploader(file:$file) 
 }

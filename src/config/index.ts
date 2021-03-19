@@ -7,5 +7,7 @@ export const {
     PORT,
     MODE,
     DB = 'mongodb://localhost/graphql',
-    IN_PROD = MODE !== 'production'
+    IN_PROD = MODE !== 'production',
+    BASE_URL,
+    URL = `${BASE_URL}${PORT} `
 } = parsed
